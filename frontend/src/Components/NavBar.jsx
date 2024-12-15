@@ -87,13 +87,16 @@ export default function NavBar() {
       anchorOrigin={{
         vertical: 'top',
         horizontal: 'right',
+       
       }}
+      
       id={menuId}
       keepMounted
       transformOrigin={{
         vertical: 'top',
         horizontal: 'right',
       }}
+      
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -156,7 +159,7 @@ export default function NavBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: '#04141c' }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -173,7 +176,7 @@ export default function NavBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            STDAY
           </Typography>
           <Search>
             <SearchIconWrapper>
