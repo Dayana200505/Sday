@@ -1,110 +1,149 @@
-import React, { useState } from "react";
-import {
-  Container,
-  Box,
-  Avatar,
-  Typography,
-  TextField,
-  Button,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
-} from "@mui/material";
-import { Edit } from "@mui/icons-material";
+import * as React from 'react';
+import { extendTheme, styled } from '@mui/material/styles';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import DescriptionIcon from '@mui/icons-material/Description';
+import LayersIcon from '@mui/icons-material/Layers';
+import { AppProvider, DashboardLayout, PageContainer } from '@toolpad/core';
 
-const ProfileUser = () => {
-  const [user, setUser] = useState({
-    firstName: "Juan",
-    lastName: "Pérez",
-    email: "juan.perez@example.com",
-    profileImage: "https://via.placeholder.com/150",
-  });
+import Grid from '@mui/material/Grid2';
 
-  const [editing, setEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-  });
+const NAVIGATION = [
+  {
+    kind: 'header',
+    title: 'Main items',
+  },
+  {
+    segment: 'dashboard',
+    title: 'Dashboard',
+    icon: <DashboardIcon />,
+  },
+  {
+    segment: 'orders',
+    title: 'Orders',
+    icon: <ShoppingCartIcon />,
+  },
+  {
+    kind: 'divider',
+  },
+  {
+    kind: 'header',
+    title: 'Analytics',
+  },
+  {
+    segment: 'reports',
+    title: 'Reports',
+    icon: <BarChartIcon />,
+    children: [
+      {
+        segment: 'sales',
+        title: 'Sales',
+        icon: <DescriptionIcon />,
+      },
+      {
+        segment: 'traffic',
+        title: 'Traffic',
+        icon: <DescriptionIcon />,
+      },
+    ],
+  },
+  {
+    segment: 'integrations',
+    title: 'Integrations',
+    icon: <LayersIcon />,
+  },
+];
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+const demoTheme = extendTheme({
+  colorSchemes: { light: true, dark: true },
+  colorSchemeSelector: 'class',
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 600,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
 
-  const handleEditClick = () => {
-    if (editing) {
-      // Aquí puedes agregar la lógica para guardar los cambios en el backend
-      setUser(formData); // Actualiza el estado con los nuevos datos
-    }
-    setEditing(!editing);
-  };
+function useDemoRouter(initialPath) {
+  const [pathname, setPathname] = React.useState(initialPath);
+
+  const router = React.useMemo(() => {
+    return {
+      pathname,
+      searchParams: new URLSearchParams(),
+      navigate: (path) => setPathname(String(path)),
+    };
+  }, [pathname]);
+
+  return router;
+}
+
+const Skeleton = styled('div')(({ theme, height }) => ({
+  backgroundColor: theme.palette.action.hover,
+  borderRadius: theme.shape.borderRadius,
+  height,
+  content: '" "',
+}));
+
+export default function ProfileUser(props) {
+  const { window } = props;
+
+  const router = useDemoRouter('/dashboard');
+
+  // Remove this const when copying and pasting into your project.
+  const demoWindow = window ? window() : undefined;
 
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ mt: 4, display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <Card sx={{ width: "100%", boxShadow: 3 }}>
-          <CardContent>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item>
-                <Avatar
-                  alt="Profile Image"
-                  src={user.profileImage}
-                  sx={{ width: 100, height: 100 }}
-                />
-              </Grid>
-              <Grid item xs>
-                <Typography variant="h5">{`${user.firstName} ${user.lastName}`}</Typography>
-                <Typography variant="body1" color="textSecondary">
-                  {user.email}
-                </Typography>
-              </Grid>
+    <AppProvider
+      navigation={NAVIGATION}
+      router={router}
+      theme={demoTheme}
+      window={demoWindow}
+    >
+      <DashboardLayout>
+        <PageContainer>
+          <Grid container spacing={1}>
+            <Grid size={5} />
+            <Grid size={12}>
+              <Skeleton height={14} />
             </Grid>
-          </CardContent>
-          <CardActions>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleEditClick}
-              startIcon={<Edit />}
-            >
-              {editing ? "Guardar Cambios" : "Editar Perfil"}
-            </Button>
-          </CardActions>
-        </Card>
+            <Grid size={12}>
+              <Skeleton height={14} />
+            </Grid>
+            <Grid size={4}>
+              <Skeleton height={100} />
+            </Grid>
+            <Grid size={8}>
+              <Skeleton height={100} />
+            </Grid>
 
-        {editing && (
-          <Box sx={{ mt: 4 }}>
-            <TextField
-              label="Nombre"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Apellido"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Correo Electrónico"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-            />
-          </Box>
-        )}
-      </Box>
-    </Container>
+            <Grid size={12}>
+              <Skeleton height={150} />
+            </Grid>
+            <Grid size={12}>
+              <Skeleton height={14} />
+            </Grid>
+
+            <Grid size={3}>
+              <Skeleton height={100} />
+            </Grid>
+            <Grid size={3}>
+              <Skeleton height={100} />
+            </Grid>
+            <Grid size={3}>
+              <Skeleton height={100} />
+            </Grid>
+            <Grid size={3}>
+              <Skeleton height={100} />
+            </Grid>
+          </Grid>
+        </PageContainer>
+      </DashboardLayout>
+    </AppProvider>
   );
-};
-
-export default ProfileUser;
+}

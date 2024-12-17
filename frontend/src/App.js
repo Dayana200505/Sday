@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 import Home from './Pages/Home';
 import UserRegister from "./Pages/UserRegister";
 import ProfileUser from "./Pages/ProfileUser";
+import Activities from "./Pages/Activities";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<UserRegister />} />
           <Route path="/profile" element={<ProfileUser/>} />
+          <Route path= "/activities" element ={<Activities/>}> </Route>
         </Routes>
       </Box>
     </BrowserRouter>
