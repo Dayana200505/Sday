@@ -4,54 +4,60 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
-import LayersIcon from '@mui/icons-material/Layers';
 import { AppProvider, DashboardLayout, PageContainer } from '@toolpad/core';
+import HomeIcon from '@mui/icons-material/Home';
+import UploadIcon from '@mui/icons-material/Upload';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FaceIcon from '@mui/icons-material/Face';
 
 import Grid from '@mui/material/Grid2';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 const NAVIGATION = [
   {
     kind: 'header',
-    title: 'Main items',
+    title: 'Menu',
+  },
+  {
+    segment: 'home',
+    title: 'Home',
+    icon: <HomeIcon />,
   },
   {
     segment: 'dashboard',
-    title: 'Dashboard',
-    icon: <DashboardIcon />,
+    title: 'Diario',
+    icon: <ImportContactsIcon />,
   },
   {
     segment: 'orders',
-    title: 'Orders',
-    icon: <ShoppingCartIcon />,
+    title: 'Publicar',
+    icon: <UploadIcon  />,
   },
   {
     kind: 'divider',
   },
   {
     kind: 'header',
-    title: 'Analytics',
+    title: 'Análisis',
   },
   {
     segment: 'reports',
-    title: 'Reports',
+    title: 'Reportes',
     icon: <BarChartIcon />,
     children: [
       {
         segment: 'sales',
-        title: 'Sales',
-        icon: <DescriptionIcon />,
+        title: 'Visitados',
+        icon: <FaceIcon />,
       },
       {
         segment: 'traffic',
-        title: 'Traffic',
-        icon: <DescriptionIcon />,
+        title: 'Me gusta',
+        icon: <FavoriteIcon />,
       },
     ],
-  },
-  {
-    segment: 'integrations',
-    title: 'Integrations',
-    icon: <LayersIcon />,
   },
 ];
 
@@ -91,57 +97,75 @@ const Skeleton = styled('div')(({ theme, height }) => ({
 }));
 
 export default function ProfileUser(props) {
-  const { window } = props;
+  
 
-  const router = useDemoRouter('/dashboard');
-
-  // Remove this const when copying and pasting into your project.
-  const demoWindow = window ? window() : undefined;
+  const router = useDemoRouter('/home'); // Ruta inicial configurada a "/dashboard"
 
   return (
     <AppProvider
       navigation={NAVIGATION}
       router={router}
       theme={demoTheme}
-      window={demoWindow}
     >
       <DashboardLayout>
         <PageContainer>
-          <Grid container spacing={1}>
-            <Grid size={5} />
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={4}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={8}>
-              <Skeleton height={100} />
-            </Grid>
+          {/* Bienvenida visible solo en la página inicial */}
+          {router.pathname === '/home' && (
+            <Box
+              sx={{
+                padding: 2,
+                textAlign: 'center',
+                backgroundColor: '#e0f7fa',
+                borderRadius: 2,
+                marginBottom: 2,
+              }}
+            >
+              <Typography variant="h5" component="h1">
+                ¡Bienvenido a SDAY!
+              </Typography>
+              <Typography variant="body1" sx={{ marginTop: 1 }}>
+                Tu plataforma de análisis y gestión.
+              </Typography>
+            </Box>
+          )}
 
-            <Grid size={12}>
-              <Skeleton height={150} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
+          <Box>
+            <Grid container spacing={2}>
+              <Grid size={5} />
+              <Grid size={12}>
+                <Skeleton height={14} />
+              </Grid>
+              <Grid size={12}>
+                <Skeleton height={14} />
+              </Grid>
+              <Grid size={4}>
+                <Skeleton height={100} />
+              </Grid>
+              <Grid size={8}>
+                <Skeleton height={100} />
+              </Grid>
 
-            <Grid size={3}>
-              <Skeleton height={100} />
+              <Grid size={12}>
+                <Skeleton height={150} />
+              </Grid>
+              <Grid size={12}>
+                <Skeleton height={14} />
+              </Grid>
+
+              <Grid size={3}>
+                <Skeleton height={100} />
+              </Grid>
+              <Grid size={3}>
+                <Skeleton height={100} />
+              </Grid>
+              <Grid size={3}>
+                <Skeleton height={100} />
+              </Grid>
+              <Grid size={3}>
+                <Skeleton height={100} />
+              </Grid>
             </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-          </Grid>
+          </Box>
         </PageContainer>
       </DashboardLayout>
     </AppProvider>
